@@ -13,7 +13,7 @@ sb = open(f'{ROOT}/分镜表.md', encoding='utf-8').read()
 
 # ---- 分镜表镜头区间 ----
 sb_shots = {}
-for m in re.finditer(r'^\| (SC\d\d)[^|]*\| (\d+)–(\d+) \|', sb, re.M):
+for m in re.finditer(r'^\| (SC\d{2,3})[^|]*\| (\d+)–(\d+) \|', sb, re.M):
     sb_shots[m.group(1)] = (int(m.group(2)), int(m.group(3)))
 
 # ---- 白名单 ----
@@ -21,7 +21,7 @@ wl_text = re.search(r'\*\*闪烁白名单.*?\*\*：(.*?)。\*\*不在表内', sb
 whitelist = {}
 if wl_text:
     for part in wl_text.group(1).split('·'):
-        mm = re.match(r'\s*(SC\d\d)\s+(.*)', part.strip())
+        mm = re.match(r'\s*(SC\d{2,3})\s+(.*)', part.strip())
         if mm: whitelist[mm.group(1)] = mm.group(2).strip()
 
 groups = sys.argv[1:] or sorted(os.path.basename(p) for p in glob.glob(f'{ROOT}/src/shots/G*'))
@@ -59,7 +59,7 @@ for p, q in zip(ids, ids[1:]):
 print(f'[glitch] 白名单 {len(whitelist)} 条')
 for g in groups:
     for f in sorted(glob.glob(f'{ROOT}/src/shots/{g}/SC*.tsx')):
-        sid = os.path.basename(f)[:4]
+        _m = re.match(r'(SC\d{2,3})', os.path.basename(f)); sid = _m.group(1) if _m else os.path.basename(f)[:4]
         src = open(f, encoding='utf-8').read()
         n = len(re.findall(r'<GlitchIn\b', src)) + len(re.findall(r'glitchOpacity\(', src))
         want = 1 if sid in whitelist else 0
@@ -69,7 +69,7 @@ for g in groups:
 
 # ---- 2b) 扫光 ----
 sw = re.search(r'扫光白名单[^：:\n]*[：:]\s*([^\n]*)', sb)
-sweep_wl = set(re.findall(r'SC\d\d', sw.group(1))) if sw else set()
+sweep_wl = set(re.findall(r'SC\d{2,3}', sw.group(1))) if sw else set()
 print(f'[sweep] 扫光白名单 {len(sweep_wl)} 条{"（分镜表没写扫光白名单 → 任何扫光都算超标）" if not sw else ""}：{" ".join(sorted(sweep_wl)) or "—"}')
 SWEEP = re.compile(r'<(LightSweep|StageLine|GhostText)\b')
 for g in groups:
@@ -77,7 +77,7 @@ for g in groups:
         src = open(f, encoding='utf-8').read(); hits = sorted(set(SWEEP.findall(src)))
         if not hits: continue
         base = os.path.basename(f); sid = base[:4]
-        if re.match(r'SC\d\d', sid):
+        if re.match(r'SC\d{2,3}', sid):
             ok = sid in sweep_wl
             if not ok: problems += 1
             print(f'  {sid} 用了 {"/".join(hits)}{"" if ok else "  ✗ 不在扫光白名单"}')

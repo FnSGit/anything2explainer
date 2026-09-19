@@ -34,7 +34,7 @@ if not args:
 
 def shots_from_storyboard():
     sb = open(f'{ROOT}/分镜表.md', encoding='utf-8').read()
-    return [(m.group(1), int(m.group(2)), int(m.group(3))) for m in re.finditer(r'^\| (SC\d\d)[^|]*\| (\d+)–(\d+) \|', sb, re.M)], sb
+    return [(m.group(1), int(m.group(2)), int(m.group(3))) for m in re.finditer(r'^\| (SC\d{2,3})[^|]*\| (\d+)–(\d+) \|', sb, re.M)], sb
 def shots_from_index():
     out = []
     for p in sorted(glob.glob(f'{ROOT}/src/shots/G*/index.ts')):
@@ -67,7 +67,7 @@ else:
     comp = args[0]
     if sb:
         m = re.search(r'## ' + comp + r'（.*?\n(.*?)(?=\n## |\n---)', sb, re.S)
-        ids = re.findall(r'^\| (SC\d\d)', m.group(1), re.M) if m else []
+        ids = re.findall(r'^\| (SC\d{2,3})', m.group(1), re.M) if m else []
     else:
         p = f'{ROOT}/src/shots/{comp}/index.ts'
         ids = re.findall(r"\{id: '(SC\d+)'", open(p, encoding='utf-8').read()) if os.path.exists(p) else []
