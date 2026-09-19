@@ -83,6 +83,10 @@ const FORMULAS = {
   casesAbs: String.raw`|x|=\begin{cases} x & x\ge 0 \\ -x & x<0 \end{cases}`,
   nestedFrac: String.raw`\frac{\sqrt{\pi}}{2}+\frac{\frac{a}{b}}{\frac{c}{d}}`,
   bigO: String.raw`T(n)=O(n\log n)`,
+  gaborLimit: String.raw`\sigma_{t}\,\sigma_{f}\;\ge\;\frac{1}{4\pi}`,          // 时频精度不能同时要好
+  dct: String.raw`X_{k}=\sum_{n=0}^{N-1}x_{n}\cos\!\left[\frac{\pi}{N}\left(n+\tfrac{1}{2}\right)k\right]`,  // JPEG 用的余弦变换
+  nSquared: String.raw`O(n^{2})`,
+  nLogN: String.raw`O(n\log n)`,
   sumLimit: String.raw`\lim_{n\to\infty}\frac{1}{n}\sum_{k=1}^{n}f\!\left(\frac{k}{n}\right)=\int_{0}^{1}f(x)\,dx`,
 };
 
