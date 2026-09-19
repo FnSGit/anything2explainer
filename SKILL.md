@@ -10,6 +10,9 @@ description: 给一个主题，产出一条黑底 MG 风格（幕底可选星点
 ## 何时用
 - 用户给出主题（"讲一下 X"）要一条讲解视频；或给出一篇文章/文档要改成视频。
 - 不适用：复刻某条现有视频（用 video-replica）、真人口播、需要实拍为主的片子。
+- **数学 / 物理题材可以做**，但有边界：适合讲概念、直觉、量级（「傅里叶在干什么」「为什么电场线长这样」「矩阵乘法为什么这么算」）。
+  **不适合以严格推导 / 逐步证明 / 公式变形为主**的片子——本流程是「一句解说 = 一个镜头」，推导需要连续演算不切的节奏，而且每步推导没有大数字可当主角，会被自己的 QC 判据反复判不合格（这类内容建议用 Manim）。
+  专门规则见 `reference/math-physics.md`（含主体尺度实测、紫色预算、公式管线、尚未实现的图元）。
 
 ## 硬性原则
 1. **原创**：画面全部代码绘制；可选 B-roll 只能用免版权素材（Mixkit 等）并登记 MANIFEST；不得使用任何现有视频的帧或片段。视觉语言的灵感来自抖音 @图灵宇宙（见 README 致谢），写交付说明时照实说明「风格致敬、画面自绘」。
@@ -67,6 +70,10 @@ description: 给一个主题，产出一条黑底 MG 风格（幕底可选星点
 | `reference/motion-vocabulary.md` | 入场/强调/光效/离场/运镜（含预算）/节拍/衔接的公式与帧数，闪烁白名单规则 |
 | `reference/composition-and-light.md` | **主体尺寸三档、光跟主角、高光时刻编排、纵深与承接、QC 量化判据**（两片对比后补的审美驱动规则） |
 | `reference/narration-guidance.md` | **口播文案写作原则**（通用、高层：处境开场 / 一条主线 / 先因后果 / 可感尺度 / 承重比喻 / 语气 / 节奏 / 术语后置 / 结尾回扣 / 密度 / 说画面说不了的 / 精确 / 章界承上启下）+ 起飞前检查表。结构由主线决定，不套题材模板 |
+| `reference/math-physics.md` | **数学 / 物理题材**：适用边界、`math.tsx` 图元目录、真 LaTeX 公式管线与尺寸标定（嵌套分式 ink≈2.59×fontSize）、**四条实测硬规则**（图元尺寸档 / 紫色预算 / 光跟主角 / 安静是允许的）、概念类型补充、QC 判据对照、未实现图元清单 |
+| `template/src/math.tsx` | 数学 / 物理图元库（`Axes` `Plot` `ParamCurve` `MovingPoint` `SecantTangent` `AreaFill` `VectorField` `AngleArc` `RightAngle` `TickMark` `Polygon` `GlowDot` `SpanLabel`），纯函数确定性、`p` 为 draw-on 进度 |
+| `template/src/formula.tsx` | 真 LaTeX 公式组件（`MathFormula` / `MathFormulaReveal`）。构建期预生成自包含 SVG → 运行期不需 LaTeX / 不需字体文件 / 不联网 / 逐字节可复现 |
+| `template/scripts/gen_mathjax_svg.mjs` | 公式生成器：TeX → SVG，写入 `src/common/mathjax_svg.ts`（已入库 46 条）。加公式：改脚本 `FORMULAS` → `node scripts/gen_mathjax_svg.mjs` → 提交生成物 |
 | `reference/narration-storyboard.md` | 解说词格式与预算、配音参数、字幕切块、分镜令牌格式、按画面关系类型选的镜头设计模式 |
 | `reference/research-brief.md` | 研究员 prompt 与事实规则 |
 | `reference/agent-build-rules.md` / `agent-qc-rules.md` | 直接发给构建/QC agent 的协议 |
