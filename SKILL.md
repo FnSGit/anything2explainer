@@ -1,9 +1,23 @@
 ---
 name: anything2explainer
-description: 给一个主题，产出一条黑底 MG 风格（幕底可选星点或点阵波）、有配音字幕章节进度条的科普讲解视频（中文或英文；Remotion 代码动画；时长由用户定，常用 3–5 分钟）。内含可编译模板、图元库、配音/分镜/渲染工具、风格与动效规范、多 agent 分工协议与 QC 判据，以及一条完整样片（《RAG 与知识库》）作为质量标尺。Turn any topic into a narrated motion-graphics explainer video in Chinese or English, on a black canvas with a star-field or dot-field backdrop, TTS voiceover, subtitles and a chapter progress bar, every frame drawn in code with Remotion. Use when the user asks for an explainer, educational or science-communication video about a topic, or wants an article or document turned into a video.
+description: 【已废弃 DEPRECATED — 请改用 video-craft skill】给一个主题，产出一条黑底 MG 风格（幕底可选星点或点阵波）、有配音字幕章节进度条的科普讲解视频（中文或英文；Remotion 代码动画；时长由用户定，常用 3–5 分钟）。本 skill 的能力已整体迁入 video-craft 的 backends/remotion/；video-craft 额外提供后端路由（连续公式推导→Manim、真终端教学→asciinema、产品宣传→Hyperframes）与渲染器无关的 core 层。保留本 skill 仅为兼容历史项目（~/Projects/ai-video/ 下的 linear-function / transformer / a2e-fourier / py-course 均用旧布局），不要用于新项目。Turn any topic into a narrated motion-graphics explainer video in Chinese or English, on a black canvas with a star-field or dot-field backdrop, TTS voiceover, subtitles and a chapter progress bar, every frame drawn in code with Remotion. SUPERSEDED by the video-craft skill — use that for new projects; this skill remains only so existing projects built on its old layout keep working.
 ---
 
 # anything2explainer
+
+> ## ⛔ 已废弃（DEPRECATED）
+>
+> **本 skill 的能力已整体迁入 [`video-craft`](../../../../Projects/ai-video/video-craft-skill/SKILL.md)**
+> （安装位置：`~/.pi/agent/skills/video-craft`）。
+>
+> - 本 skill 的 Remotion 部分 → `video-craft/backends/remotion/`
+> - 渲染器无关资产（调研/文案/TTS 时间轴/QC 脚本） → `video-craft/core/`
+> - video-craft 新增：后端路由（连续公式推导 → Manim、真终端教学 → asciinema、
+>   产品宣传 → Hyperframes）
+>
+> **新项目一律用 video-craft。** 保留本 skill 只为让 `~/Projects/ai-video/` 下
+> 用旧布局（`template/scripts/`）做的 `linear-function` / `transformer` /
+> `a2e-fourier` / `py-course` 还能继续跑。
 
 把任意技术/知识主题做成一条**原创**科普讲解视频。视觉体系固定（黑底幕底——点阵波默认、星点雾底可选（`config.bg`）、白线条图形 + 紫色重点、超粗黑体、44px 白字黑边字幕、底部章节进度条、顶部胶囊 HUD），变化的是内容与规模：时长由用户定（确认点 1），解说词、分镜、镜头代码随之而变。样片：`examples/rag/`（4′35″，44 句、44 镜头，8 个构建组并行 40 分钟，两轮 QC）。**目标是和样片风格一致、质量相近**——先看 `examples/rag/frames/overview_*.jpg` 建立标尺，再开工。
 
